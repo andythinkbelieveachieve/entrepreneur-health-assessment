@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pre-Seed Company Health Assessment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        .question {
+            margin: 20px 0;
+        }
+        label {
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Company Health Assessment</h1>
+    <form id="healthForm">
+        <!-- Financial Metrics -->
+        <div class="question">
+            <label for="revenue">What is your current monthly revenue?</label>
+            <input type="number" id="revenue" name="revenue" placeholder="Enter monthly revenue in USD">
+        </div>
+        <div class="question">
+            <label for="burnRate">What is your current monthly burn rate?</label>
+            <input type="number" id="burnRate" name="burnRate" placeholder="Enter monthly burn rate in USD">
+        </div>
+        <div class="question">
+            <label for="runway">How many months of runway do you have left?</label>
+            <input type="number" id="runway" name="runway" placeholder="Enter runway in months">
+        </div>
+
+        <!-- Team Dynamics -->
+        <div class="question">
+            <label for="teamSize">How many people are on your team?</label>
+            <input type="number" id="teamSize" name="teamSize" placeholder="Enter team size">
+        </div>
+        <div class="question">
+            <label for="experience">Do you have experienced founders? (Yes/No)</label>
+            <select id="experience" name="experience">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
+        </div>
+
+        <!-- Market Fit -->
+        <div class="question">
+            <label for="marketFit">Have you validated your product-market fit? (Yes/No)</label>
+            <select id="marketFit" name="marketFit">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
+        </div>
+
+        <!-- Product Development -->
+        <div class="question">
+            <label for="mvp">Have you developed a Minimum Viable Product (MVP)? (Yes/No)</label>
+            <select id="mvp" name="mvp">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
+        </div>
+
+        <!-- Fundraising Status -->
+        <div class="question">
+            <label for="funding">How much funding have you raised so far? (in USD)</label>
+            <input type="number" id="funding" name="funding" placeholder="Enter amount of funding raised">
+        </div>
+
+        <button type="button" onclick="calculateScore()">Get Health Score</button>
+
+        <div id="result" style="margin-top: 20px;"></div>
+    </form>
+</div>
+
+<script>
+    function calculateScore() {
+        const revenue = parseInt(document.getElementById("revenue").value) || 0;
+        const burnRate = parseInt(document.getElementById("burnRate").value) || 0;
+        const runway = parseInt(document.getElementById("runway").value) || 0;
+        const teamSize = parseInt(document.getElementById("teamSize").value) || 0;
+        const experience = document.getElementById("experience").value === "yes" ? 10 : 0;
+        const marketFit = document.getElementById("marketFit").value === "yes" ? 10 : 0;
+        const mvp = document.getElementById("mvp").value === "yes" ? 10 : 0;
+        const funding = parseInt(document.getElementById("funding").value) || 0;
+
+        // Simple scoring algorithm
+        let score = 0;
+        score += revenue > 10000 ? 20 : revenue > 5000 ? 10 : 5;
+        score += burnRate < revenue ? 10 : 5;
+        score += runway > 6 ? 10 : 5;
+        score += teamSize > 3 ? 10 : 5;
+        score += experience;
+        score += marketFit;
+        score += mvp;
+        score += funding > 100000 ? 10 : funding > 50000 ? 5 : 0;
+
+        // Display the score
+        const resultDiv = document.getElementById("result");
+        resultDiv.innerHTML = `<h2>Your Health Score: ${score}/100</h2>`;
+        resultDiv.innerHTML += score > 70 ? "<p>Your company is in great health!</p>" : "<p>You may need to focus on certain areas.</p>";
+    }
+</script>
+
+</body>
+</html>
