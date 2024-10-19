@@ -129,12 +129,61 @@
         score += mvp;
         score += funding > 100000 ? 10 : funding > 50000 ? 5 : 0;
 
-        // Display the score
+        // Display the score and contextual analysis
         const resultDiv = document.getElementById("result");
         resultDiv.innerHTML = `<h2>Your Health Score: ${score}/100</h2>`;
-        resultDiv.innerHTML += score > 70 ? "<p>Your company is in great health!</p>" : "<p>You may need to focus on certain areas.</p>";
+        
+        let analysis = "";
+        
+        // Financial analysis
+        if (revenue < burnRate) {
+            analysis += "<p><strong>Financial Health:</strong> Your burn rate exceeds your revenue, which may affect long-term sustainability. Consider cutting costs or increasing revenue.</p>";
+        } else {
+            analysis += "<p><strong>Financial Health:</strong> Your revenue is healthy compared to your burn rate. Keep an eye on cash flow to maintain a sustainable growth trajectory.</p>";
+        }
+        
+        if (runway < 6) {
+            analysis += "<p><strong>Runway:</strong> You have less than 6 months of runway. It's important to raise additional funds or reduce burn to extend your runway.</p>";
+        } else {
+            analysis += "<p><strong>Runway:</strong> You have a sufficient runway for now, but continue planning for future fundraising rounds.</p>";
+        }
+        
+        // Team analysis
+        if (teamSize < 3) {
+            analysis += "<p><strong>Team:</strong> You may need to expand your team or bring in more experienced members to cover key areas like marketing, product development, and sales.</p>";
+        } else {
+            analysis += "<p><strong>Team:</strong> You have a solid team size, but ensure you have experienced leadership in place to guide growth.</p>";
+        }
+
+        if (experience === 0) {
+            analysis += "<p><strong>Founders' Experience:</strong> Consider bringing in experienced advisors or mentors to help guide your company’s growth.</p>";
+        }
+
+        // Product and Market Fit analysis
+        if (marketFit === 0) {
+            analysis += "<p><strong>Product-Market Fit:</strong> You should focus on validating product-market fit through customer feedback and iteration.</p>";
+        } else {
+            analysis += "<p><strong>Product-Market Fit:</strong> You have validated product-market fit, which is critical for scaling.</p>";
+        }
+
+        if (mvp === 0) {
+            analysis += "<p><strong>MVP Development:</strong> Focus on building an MVP as a priority, to test the market and refine your product.</p>";
+        }
+
+        // Fundraising analysis
+        if (funding < 50000) {
+            analysis += "<p><strong>Fundraising:</strong> Consider securing additional funding to support your growth plans and extend runway.</p>";
+        } else {
+            analysis += "<p><strong>Fundraising:</strong> You’ve raised a healthy amount of funding so far. Continue building relationships with investors for future rounds.</p>";
+        }
+
+        // Final Call to Action
+        analysis += "<p>To dive deeper into your company’s health and explore personalized growth strategies, <a href='https://revitalizeamerica2024.com/consultation' target='_blank'>schedule a consultation with Think Latitude</a> for a formal Statement of Work (SOW) and next steps.</p>";
+        
+        resultDiv.innerHTML += analysis;
     }
 </script>
 
 </body>
 </html>
+
